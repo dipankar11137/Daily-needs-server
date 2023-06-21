@@ -32,6 +32,7 @@ async function run() {
     const bookingCollection = client
       .db('dailyNeeds')
       .collection('bookingServices');
+    const contactCollection = client.db('dailyNeeds').collection('contact');
 
     //   // // // // // // // // // // // //
 
@@ -129,6 +130,13 @@ async function run() {
       const query = { email };
       const cursor = bookingCollection.find(query);
       const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    // post  contact
+    app.post('/contact', async (req, res) => {
+      const newProduct = req.body;
+      const result = await contactCollection.insertOne(newProduct);
       res.send(result);
     });
   } finally {

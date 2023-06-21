@@ -139,6 +139,20 @@ async function run() {
       const result = await contactCollection.insertOne(newProduct);
       res.send(result);
     });
+    // // get contact
+    app.get('/contact', async (req, res) => {
+      const query = {};
+      const cursor = contactCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+    // delete contact
+    app.delete('/contact/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await contactCollection.deleteOne(query);
+      res.send(result);
+    });
   } finally {
   }
 }
